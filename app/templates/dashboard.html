@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Investment Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Real Estate Investment Dashboard</h1>
+        <form id="investment-form">
+            <div class="form-group">
+                <label for="holding_period">Holding Period (years):</label>
+                <input type="number" id="holding_period" name="holding_period" min="1" max="10" value="6">
+            </div>
+            <div class="form-group">
+                <label for="units_type1">Type 1 Units (2 Bedroom):</label>
+                <input type="number" id="units_type1" name="units_type1" placeholder="Number of Units" value="10">
+                <input type="number" id="rent_type1" name="rent_type1" placeholder="Monthly Rent" value="1200">
+            </div>
+            <div class="form-group">
+                <label for="units_type2">Type 2 Units (3 Bedroom):</label>
+                <input type="number" id="units_type2" name="units_type2" placeholder="Number of Units" value="5">
+                <input type="number" id="rent_type2" name="rent_type2" placeholder="Monthly Rent" value="1400">
+            </div>
+            <div class="form-group">
+                <label for="units_type3">Type 3 Units (4 Bedroom):</label>
+                <input type="number" id="units_type3" name="units_type3" placeholder="Number of Units" value="3">
+                <input type="number" id="rent_type3" name="rent_type3" placeholder="Monthly Rent" value="1600">
+            </div>
+            <div class="form-group">
+                <label for="vacancy_rate">Vacancy Rate (%):</label>
+                <input type="text" id="vacancy_rate" name="vacancy_rate" placeholder="e.g., 5, 4, 4, 6, 6, 6">
+            </div>
+            <div class="form-group">
+                <label for="other_income_percentage">Other Income Percentage:</label>
+                <input type="number" step="0.01" id="other_income_percentage" name="other_income_percentage" placeholder="0.03" value="0.03">
+            </div>
+            <div class="form-group">
+                <label for="operating_expenses">Operating Expenses:</label>
+                <input type="number" id="operating_expenses" name="operating_expenses" placeholder="15000" value="15000">
+            </div>
+            <div class="form-group">
+                <label for="annual_expense_increase">Annual Expense Increase:</label>
+                <input type="number" step="0.01" id="annual_expense_increase" name="annual_expense_increase" placeholder="0.03" value="0.03">
+            </div>
+            <div class="form-group">
+                <label for="property_taxes_increase_year">Property Taxes Increase Year:</label>
+                <input type="number" id="property_taxes_increase_year" name="property_taxes_increase_year" placeholder="3" value="3">
+            </div>
+            <div class="form-group">
+                <label for="property_taxes_increase_percentage">Property Taxes Increase Percentage:</label>
+                <input type="number" step="0.01" id="property_taxes_increase_percentage" name="property_taxes_increase_percentage" placeholder="0.02" value="0.02">
+            </div>
+            <div class="form-group">
+                <label for="mortgage_amount">Mortgage Amount:</label>
+                <input type="number" id="mortgage_amount" name="mortgage_amount" placeholder="400000" value="400000">
+            </div>
+            <div class="form-group">
+                <label for="interest_rate">Interest Rate:</label>
+                <input type="number" step="0.01" id="interest_rate" name="interest_rate" placeholder="0.05" value="0.05">
+            </div>
+            <div class="form-group">
+                <label for="loan_term">Loan Term:</label>
+                <input type="number" id="loan_term" name="loan_term" placeholder="30" value="30">
+            </div>
+            <div class="form-group">
+                <label for="management_fee_percentage">Management Fee Percentage:</label>
+                <input type="number" step="0.01" id="management_fee_percentage" name="management_fee_percentage" placeholder="0.1" value="0.1">
+            </div>
+            <div class="form-group">
+                <label for="salary_expense">Salary Expense:</label>
+                <input type="number" id="salary_expense" name="salary_expense" placeholder="5000" value="5000">
+            </div>
+            <div class="form-group">
+                <label for="insurance_expense">Insurance Expense:</label>
+                <input type="number" id="insurance_expense" name="insurance_expense" placeholder="2000" value="2000">
+            </div>
+            <div class="form-group">
+                <label for="property_taxes">Property Taxes:</label>
+                <input type="number" id="property_taxes" name="property_taxes" placeholder="2000" value="2000">
+            </div>
+            <button type="submit" class="btn">Calculate</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script>
+        document.getElementById('investment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = {
+                units: {
+                    Type1: {
+                        units: parseInt(formData.get('units_type1')),
+                        monthly_rent: parseFloat(formData.get('rent_type1'))
+                    },
+                    Type2: {
+                        units: parseInt(formData.get('units_type2')),
+                        monthly_rent: parseFloat(formData.get('rent_type2'))
+                    },
+                    Type3: {
+                        units: parseInt(formData.get('units_type3')),
+                        monthly_rent: parseFloat(formData.get('rent_type3'))
+                    }
+                },
+                holding_period: parseInt(formData.get('holding_period')),
+                vacancy_rate: formData.get('vacancy_rate').split(',').map(rate => parseFloat(rate.trim())),
+                other_income_percentage: parseFloat(formData.get('other_income_percentage')),
+                operating_expenses: parseFloat(formData.get('operating_expenses')),
+                annual_expense_increase: parseFloat(formData.get('annual_expense_increase')),
+                property_taxes_increase_year: parseInt(formData.get('property_taxes_increase_year')),
+                property_taxes_increase_percentage: parseFloat(formData.get('property_taxes_increase_percentage')),
+                mortgage_amount: parseFloat(formData.get('mortgage_amount')),
+                interest_rate: parseFloat(formData.get('interest_rate')),
+                loan_term: parseInt(formData.get('loan_term')),
+                management_fee_percentage: parseFloat(formData.get('management_fee_percentage')),
+                salary_expense: parseFloat(formData.get('salary_expense')),
+                insurance_expense: parseFloat(formData.get('insurance_expense')),
+                property_taxes: parseFloat(formData.get('property_taxes'))
+            };
+
+            fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(results => {
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = "";
+                results.forEach(result => {
+                    const yearDiv = document.createElement('div');
+                    yearDiv.classList.add('result-year');
+                    yearDiv.innerHTML = `
+                        <h3>Year ${result.year}</h3>
+                        <p><strong>NOI:</strong> ${result.noi.toFixed(2)}</p>
+                        <p><strong>ADS:</strong> ${result.ads.toFixed(2)}</p>
+                        <p><strong>BTC:</strong> ${result.btc.toFixed(2)}</p>
+                        <p><strong>Operating Ratio:</strong> ${result.operating_ratio.toFixed(2)}</p>
+                        <p><strong>Break Even Ratio:</strong> ${result.break_even_ratio.toFixed(2)}</p>
+                        <p><strong>Debt Coverage Ratio:</strong> ${result.debt_coverage_ratio.toFixed(2)}</p>
+                        <p><strong>LTV Ratio:</strong> ${result.ltv_ratio.toFixed(2)}</p>
+                        <p><strong>Cap Rate:</strong> ${result.cap_rate.toFixed(2)}</p>
+                        <p><strong>Equity Dividend Rate:</strong> ${result.equity_dividend_rate.toFixed(2)}</p>
+                        <details>
+                            <summary>Detailed Expenses</summary>
+                            <pre>${JSON.stringify(result.detailed_expense, null, 2)}</pre>
+                        </details>
+                    `;
+                    resultsDiv.appendChild(yearDiv);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
