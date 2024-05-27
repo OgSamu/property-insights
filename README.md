@@ -1,8 +1,8 @@
-# Real Estate Investment Calculator
+# Property Insights
 
 ## Overview
 
-The Real Estate Investment Calculator is a web application designed to assist real estate investors in analyzing potential investment properties. The application calculates various financial metrics such as Net Operating Income (NOI), Debt Service, Capitalization Rate (Cap Rate), and more, based on user-inputted data regarding property characteristics and financial assumptions.
+This web application designed to assist real estate investors in analyzing potential investment properties. The application calculates various financial metrics such as Net Operating Income (NOI), Debt Service, Capitalization Rate (Cap Rate), and more, based on user-inputted data regarding property characteristics and financial assumptions.
 
 ## Features
 
@@ -29,5 +29,5 @@ To get the application running locally on your machine, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourgithubusername/real-estate-calculator.git
-   cd real-estate-calculator
+   git clone https://github.com/OgSamu/property-insights.git
+   cd property-insights
