@@ -2,7 +2,7 @@
 
 ## Overview
 
-This web application designed to assist real estate investors in analyzing potential investment properties. The application calculates various financial metrics such as Net Operating Income (NOI), Debt Service, Capitalization Rate (Cap Rate), and more, based on user-inputted data regarding property characteristics and financial assumptions.
+This web application is designed to assist real estate investors in analyzing potential investment properties. The application calculates various financial metrics such as Net Operating Income (NOI), Debt Service, Capitalization Rate (Cap Rate), and more, based on user-inputted data regarding property characteristics and financial assumptions.
 
 ## Features
 
